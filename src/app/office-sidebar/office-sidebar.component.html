@@ -1,0 +1,79 @@
+<div class="ms-PanelExample">
+  <button class="ms-Button" *ngIf="panelStatus == false" (click)="OpenSidePanel()">
+    <span class="ms-Button-label">Open Panel</span> 
+  </button>
+  <div class="ms-Panel ms-Panel--left" *ngIf="panelStatus == true" [style.display]="panelStatus ? 'block' : 'none'">
+    <button class="ms-Panel-closeButton ms-PanelAction-close">
+      <i class="ms-Panel-closeIcon ms-Icon ms-Icon--Cancel" (click)="OpenSidePanel()"></i>
+    </button>
+    <div class="ms-Panel-contentInner">
+      <div class="ms-Pivot ms-Pivot--large">
+        <ul class="ms-Pivot-links">
+          <li class="ms-Pivot-link" (click)="selectTab('Clauses')" [ngClass]="selectedTab == 'Clauses'  ? 'is-selected' : ''">
+            Clauses
+          </li>
+          <li class="ms-Pivot-link " (click)="selectTab('Variables')" [ngClass]="selectedTab == 'Variables'  ? 'is-selected' : ''">
+            Variables 
+          </li>
+          
+        </ul>
+        <div class="ms-Pivot-content" *ngIf="selectedTab == 'Clauses'" [style.display]="selectedTab == 'Clauses' ? 'block' : 'none'">
+          <div class="ms-SearchBox">
+            <input class="ms-SearchBox-field" placeholder="Search" type="text" #Clauses (input)="search('Clauses',Clauses)"> 
+            <label class="ms-SearchBox-label">
+              <i class="ms-SearchBox-icon ms-Icon ms-Icon--Search"></i>
+              <span class="ms-SearchBox-text"></span> 
+            </label>
+            <div class="ms-CommandButton ms-SearchBox-clear ms-CommandButton--noLabel" [style.display]="searchparams != '' ? 'block' : 'none'">
+              <button class="ms-CommandButton-button" (click)="clearData();Clauses.value=''">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Clear"></i></span> 
+                <span class="ms-CommandButton-label"></span> 
+              </button>
+            </div>
+          </div>
+           <!-- Body Section Start -->
+           <div *ngFor="let item of itemsToShow;let i = index;">
+            <button class="accordion" (click)="toggleAccordian();calClass(i)"> 
+              <i class="ms-Breadcrumb-chevron ms-Icon ms-Icon--ChevronRight" [ngClass]="!isPanelOpen && selectedindex==i ? 'active' : ''"></i>
+              {{item.name}} </button>
+              <ul class="panel accordianBody " [style.display]="!isPanelOpen && selectedindex==i ? 'block' : 'none'">
+                <li  *ngFor="let child of item.childProperties" [ngClass]="!isPanelOpen ? 'active' : ''">
+                  <p> {{child.name}} </p>
+                </li>
+              </ul>
+          </div>
+
+           <!-- Body Section End -->   
+        </div>
+        <div class="ms-Pivot-content" *ngIf="selectedTab == 'Variables'" [style.display]="selectedTab == 'Variables' ? 'block' : 'none'">
+          <div class="ms-SearchBox">
+            <input class="ms-SearchBox-field" placeholder="Search" type="text" #Variables (input)="search('Variables',Variables)">
+            <label class="ms-SearchBox-label">
+              <i class="ms-SearchBox-icon ms-Icon ms-Icon--Search"></i>
+              <span class="ms-SearchBox-text"></span> 
+            </label>
+            <div class="ms-CommandButton ms-SearchBox-clear ms-CommandButton--noLabel" [style.display]="searchparams != '' ? 'block' : 'none'">
+              <button class="ms-CommandButton-button" (click)="clearData();Variables.value=''">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Clear"></i></span> 
+                <span class="ms-CommandButton-label"></span> 
+              </button>
+            </div>
+          </div>
+          <!-- Body Section Start -->
+          <div *ngFor="let item of itemsToShow;let i = index;">
+            <button class="accordion" (click)="toggleAccordian();calClass(i)"> 
+              <i class="ms-Breadcrumb-chevron ms-Icon ms-Icon--ChevronRight" [ngClass]="!isPanelOpen && selectedindex==i ? 'active' : ''"></i>
+              {{item.name}} </button>
+              <ul class="panel accordianBody " [style.display]="!isPanelOpen && selectedindex==i ? 'block' : 'none'">
+                <li  *ngFor="let child of item.childProperties" [ngClass]="!isPanelOpen ? 'active' : ''">
+                  <p> {{child.name}} </p>
+                </li>
+              </ul>
+          </div>
+          
+        <!-- Body Section End -->
+        </div>
+        </div>
+      </div>
+    </div>
+</div>
